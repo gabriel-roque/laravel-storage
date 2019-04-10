@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->string('email');
             $table->string('mensagem');
-            $table->string('arquivo_path');
+            $table->string('arquivo');
             $table->timestamps();
         });
     }
