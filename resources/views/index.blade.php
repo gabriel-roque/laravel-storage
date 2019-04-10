@@ -75,7 +75,7 @@
                 @foreach($posts as $post )
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
-                                <img class="card-img-top figure-img img-fluid rounded" src="">
+                                <img class="card-img-top figure-img img-fluid rounded" src="/storage/{{$post->arquivo}}">
                                 <div class="card-body">
                                     <p class="card-text">{{$post->email}}</p>
                                     <p class="card-text">{{$post->mensagem}}</p>

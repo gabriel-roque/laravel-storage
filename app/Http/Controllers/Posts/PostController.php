@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Posts;
 use App\Models\Posts\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -37,16 +39,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // Guarda o PATH do arquivo e o armazena ele na base
+        $path = $request->file('arquivo')->storeAs('images', 'img_album'.''.".jpg",'public');
 
         $post = new Post();
+
         $post->email = $request->input('email');
         $post->mensagem = $request->input('mensagem');
-        $post->arquivo = '';
-//        $post->arquivo = $request->input('arquivo');
+        $post->arquivo = $path;
         $post->save();
+
         return back();
-
-
 
     }
 
