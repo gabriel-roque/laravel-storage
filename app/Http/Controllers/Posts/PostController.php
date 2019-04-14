@@ -93,6 +93,14 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        if (isset($post)){
+            $arquivo = $post->arquivo;
+            // Apaga do meu disco o arquivo
+            Storage::disk('public')->delete($arquivo);
+            // Apaga o registro
+            $post->delete();
+        }
+        return redirect('/');
     }
 }

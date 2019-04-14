@@ -46,7 +46,7 @@
     <section class="jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">Escreva aqui seu novo Post</h1>
-            <form method="POST" action="/" enctype="multipart/form-data">
+            <form method="POST" action="{{url('/store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group text-left">
                     <label for="email">Endereço de e-mail</label>
@@ -83,9 +83,9 @@
                                         <div class="btn-group">
                                             <!--button type="button" class="btn btn-sm btn-outline-secondary">Download</button-->
                                             <a type="button" class="btn btn-sm btn-outline-secondary" href="#">Download</a>
-                                            <form>
+                                            <form method="post" action="/{{$post->id}}">
                                                 @csrf
-                                                <input type="hidden" name="_method" value="delete">
+                                                <input type="hidden" name="_method" value="DELETE">
                                                 <button type="submit" class="btn btn-sm btn-outline-danger">Apagar</button>
                                             </form>
                                         </div>
