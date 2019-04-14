@@ -103,4 +103,13 @@ class PostController extends Controller
         }
         return redirect('/');
     }
+
+    public function download($id){
+        $post = Post::find($id);
+        if (isset($post)){
+            $arquivo = $post->arquivo;
+            return Storage::download('public/'.$arquivo);
+        }
+        return redirect('/');
+    }
 }
