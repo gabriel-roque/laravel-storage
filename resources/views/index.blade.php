@@ -50,14 +50,14 @@
                 @csrf
                 <div class="form-group text-left">
                     <label for="email">Endereço de e-mail</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="nome@dominio.com">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="nome@dominio.com" required>
                 </div>
                 <div class="form-group text-left">
                     <label for="mensagem">Sua mensagem</label>
                     <textarea class="form-control" id="mensagem" name="mensagem" rows="3"></textarea>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="arquivo" name="arquivo">
+                    <input type="file" class="custom-file-input" id="arquivo" name="arquivo" required>
                     <label class="custom-file-label" for="arquivo">Escolha um arquivo</label>
                 </div>
                 <p>

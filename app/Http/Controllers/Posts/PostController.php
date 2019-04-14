@@ -40,8 +40,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         // Guarda o PATH do arquivo e o armazena ele na base
-        $path = $request->file('arquivo')->storeAs('images', 'img_album'.''.".jpg",'public');
-
+        $path = $request->file('arquivo')->store('images', 'public');
         $post = new Post();
 
         $post->email = $request->input('email');
@@ -50,7 +49,6 @@ class PostController extends Controller
         $post->save();
 
         return back();
-
     }
 
     /**
