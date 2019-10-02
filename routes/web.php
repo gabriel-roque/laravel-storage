@@ -1,6 +1,12 @@
 <?php
 
-Route::get('/', 'Posts\PostController@index');
-Route::post('/store', 'Posts\PostController@store');
-Route::delete('/{id}', 'Posts\PostController@destroy');
-Route::get('/down/{id}', 'Posts\PostController@download');
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+   return redirect(\route('posts.index'));
+});
+
+Route::group(['namespace' => 'Posts'], function () {
+    Route::resource('posts', 'PostController');
+    Route::get('/posts/{id}/download/', 'PostController@download')->name('post.download');
+});

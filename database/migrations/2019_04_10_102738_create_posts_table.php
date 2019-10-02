@@ -15,9 +15,8 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('email');
-            $table->string('mensagem');
-            $table->string('arquivo');
+            $table->string('name');
+            $table->string('path_file');
             $table->timestamps();
         });
     }

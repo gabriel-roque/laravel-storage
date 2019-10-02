@@ -6,6 +6,7 @@ use App\Models\Posts\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -28,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -39,16 +40,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // Guarda o PATH do arquivo e o armazena ele na base
-        $path = $request->file('arquivo')->store('images', 'public');
-        $post = new Post();
+        try {
+            $path = $request['file_image']->getClientOriginalName();
 
-        $post->email = $request->input('email');
-        $post->mensagem = $request->input('mensagem');
-        $post->arquivo = $path;
-        $post->save();
+            $path = $request->file('file_image')->storeAs(
+                'images/'.date('Y-m-d h:m:s'), $path
+            );
 
-        return back();
+            Post::create([
+                'name' => $request->name,
+                'path_file' => $path
+            ]);
+        } catch (\Exception $e) {
+            return redirect(route('posts.index'));
+        } finally {
+            return redirect(route('posts.index'));
+        }
     }
 
     /**
@@ -93,23 +100,25 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-        if (isset($post)){
-            $arquivo = $post->arquivo;
-            // Apaga do meu disco o arquivo
-            Storage::disk('public')->delete($arquivo);
-            // Apaga o registro
-            $post->delete();
+        $path_file = Post::findOrFail($id)->path_file;
+        try {
+            Storage::delete($path_file);
+            Post::destroy($id);
+        } catch (\Exception $e) {
+            return redirect(route('posts.index'));
+        } finally {
+            return redirect(route('posts.index'));
         }
-        return redirect('/');
     }
 
-    public function download($id){
-        $post = Post::find($id);
-        if (isset($post)){
-            $arquivo = $post->arquivo;
-            return Storage::download('public/'.$arquivo);
+    public function download($id)
+    {
+        $path_file = Post::findOrFail($id)->path_file;
+
+        try {
+            return Storage::download($path_file);
+        } catch (\Exception $e) {
+            return redirect()->back();
         }
-        return redirect('/');
     }
 }
